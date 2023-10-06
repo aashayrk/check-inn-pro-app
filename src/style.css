@@ -1,0 +1,419 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,300;0,400;0,500;0,700;0,900;1,400;1,700;1,900&family=Titillium+Web:wght@400;700&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;700&family=Poppins:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@media screen and (min-width: 360px) and (-webkit-min-device-pixel-ratio: 0.5) {
+  html {
+    font-size: 0.8rem;
+  }
+}
+@media screen and (min-width: 360px) and (-webkit-min-device-pixel-ratio: 1.5) {
+  html {
+    font-size: 0.9rem;
+  }
+}
+@media screen and (min-width: 768px) {
+  html {
+    font-size: 1rem;
+  }
+}
+
+@layer components {
+
+  * {
+    @apply tracking-tight;
+  }
+
+  /* self hosting material icons */
+  @font-face {
+    font-family: "Material Icons Round";
+    font-style: normal;
+    font-weight: 400;
+    font-display: block;
+    src: url("m-icons/material-icons-round.woff2") format("woff2"), url("m-icons/material-icons-round.woff") format("woff");
+  }
+
+  .material-icons-round {
+    font-family: "Material Icons Round";
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "liga";
+    max-width: 24px;
+    overflow: hidden;
+
+    display: inline-flex;
+    vertical-align: bottom;
+  }  
+
+  /* scrollbar */
+  ::-webkit-scrollbar {
+    width: 0.25em;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-stone-200;
+  }
+   
+  ::-webkit-scrollbar-thumb {
+    @apply bg-primary-400;
+  }
+
+  /* buttons and icons */
+  .btn {
+    @apply h-12 px-4 rounded-2xl flex items-center bg-gray-100 text-sm font-bold border-b-2 border-gray-300 active:border-none leading-none;
+  }
+
+  .btn-primary {
+    @apply bg-primary-500 border-primary-700 text-white;
+  }
+
+  .btn-white {
+    @apply bg-white;
+  }
+
+  .btn-red {
+    @apply bg-red-500 border-red-700 text-white;
+  }
+
+  .btn-transparent {
+    @apply bg-transparent border-none hover:bg-stone-100;
+  }
+
+  .btn-small {
+    @apply h-10;
+  }
+
+  .btn-tiny {
+    @apply h-8 px-3 text-xs rounded-xl;
+  }
+
+  .btn.btn-round {
+    @apply w-12 justify-center p-0;
+  }
+  
+  .btn-small.btn-round {
+    @apply w-10 justify-center p-0;
+  }
+  
+  .btn-tiny.btn-round {
+    @apply w-8 justify-center p-0;
+  }
+
+  .btn:disabled {
+    @apply border-none cursor-not-allowed opacity-50;
+  }
+
+  label {
+    @apply block leading-none text-xs text-stone-700 font-bold m-0;
+  }
+
+  label + * {
+    @apply mt-1;
+  }
+
+  label.small {
+    @apply text-xs font-normal;
+  }
+
+  /* inputs */
+  .input, .select {
+    @apply h-12 px-4 rounded-2xl flex items-center w-full box-border bg-stone-100 text-sm border border-stone-100 hover:border-stone-200 focus:border-primary-700 focus:ring-4 focus:ring-primary-100 outline-none;
+  }
+
+  textarea {
+    @apply p-4 rounded-2xl flex items-center w-full box-border bg-stone-100 text-sm border border-stone-100 hover:border-stone-200 focus:border-primary-700 focus:ring-4 focus:ring-primary-100 outline-none;
+  }
+
+  /* switch / checkbox */
+  .sw label {
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    line-height: 1;
+  }
+  
+  .sw input {
+    appearance: none;
+    width: 3rem;
+    height: 2rem;
+    background-color: #cccccc;
+    border-radius: 0.75rem;
+    position: relative;
+    display: flex;
+    align-items: center;
+    @apply shadow-sm transition-colors duration-300 focus:outline-none focus:ring-4 ring-primary-100 cursor-pointer bg-stone-200;
+  }
+  
+  .sw input:checked {
+    @apply bg-primary-500;
+  }
+  
+  .sw input::before {
+    content: '';
+    width: 1.75rem;
+    height: 1.75rem;
+    margin: 0.125rem;
+    background-color: white;
+    border-radius: 0.65rem;
+    position: absolute;
+    left: 0;
+    top: 0;
+    @apply transition-all duration-75;
+  }
+  
+  .sw input:checked::before {
+    left: 1rem;
+  }
+  
+  .sw span {
+    /* margin-left: 1rem; */
+  }
+  
+  .sw label {
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    line-height: 1;
+  }
+  
+  .cb label {
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    line-height: 1;
+  }
+  
+  .cb input {
+    appearance: none;
+    width: 2rem;
+    height: 2rem;
+    background-color: #dddddd;
+    border-radius: 0.75rem;
+    position: relative;
+    display: flex;
+    align-items: center;
+    @apply shadow-sm transition-colors duration-300 focus:outline-none focus:ring-4 ring-primary-100 cursor-pointer bg-stone-200;
+  }
+  
+  .cb input:checked {
+    @apply bg-primary-500;
+  }
+  
+  .cb input:checked::before {
+    content: '';
+    width: 1rem;
+    height: 1rem;
+    margin: 0.5rem;
+    background-color: white;
+    border-radius: 0.35rem;
+    position: absolute;
+    left: 0;
+    top: 0;
+    @apply transition-all duration-75;
+  }
+  
+  .cb input:checked::before {
+    /* left: 1rem; */
+  }
+  
+  .cb span {
+    margin-left: 1rem;
+  }
+  
+  .ra label {
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    line-height: 1;
+    cursor: pointer;
+  }
+  
+  .ra input {
+    appearance: none;
+    width: 2rem;
+    height: 2rem;
+    background-color: #ccc;
+    border-radius: 0.75rem;
+    position: relative;
+    display: flex;
+    align-items: center;
+    @apply shadow-sm transition-colors duration-300 focus:outline-none focus:ring-4 ring-primary-100 bg-stone-200;
+  }
+  
+  .ra input:checked {
+    @apply bg-primary-500;
+  }
+  
+  .ra input:checked::before {
+    content: '';
+    width: 1rem;
+    height: 1rem;
+    margin: 0.5rem;
+    background-color: white;
+    border-radius: 0.35rem;
+    position: absolute;
+    left: 0;
+    top: 0;
+    @apply transition-all duration-75;
+  }
+  
+  .ra input:checked::before {
+    /* left: 1rem; */
+  }
+  
+  .ra span {
+    /* margin-left: 1rem; */
+  }
+
+  .sw input:disabled,
+  .cb input:disabled, 
+  .ra input:disabled {
+    @apply opacity-50 cursor-not-allowed;
+  }
+
+
+
+  /* material symbols */
+  span[class*="material-symbols-"] + span {
+    @apply ml-2;
+  }
+
+  span + span[class*="material-symbols-"] {
+    @apply ml-2;
+  }
+
+  .msr-icon + span {
+    @apply ml-2;
+  }
+
+  span + .msr-icon {
+    @apply ml-2;
+  }
+
+  .currency::before {
+    content: '\20b9';
+    @apply font-sans font-normal text-sm mr-1 leading-none opacity-50;
+  }
+
+
+
+  /* tags */
+  .tag {
+    @apply h-6 rounded-lg inline-flex items-center px-2 bg-amber-300 text-xs m-1;
+  }
+
+  .lone-tag {
+    @apply h-6 rounded-lg inline-flex items-center px-3 bg-amber-300 text-xs m-0;
+  }
+
+  /* subtitle */
+  .subtitle {
+    @apply mt-4 ml-6 text-xs text-stone-700;
+  }
+
+  
+
+  /* layout */
+  .two-col-grid {
+    @apply grid md:grid-cols-2 gap-2;
+  }
+
+  .data-row {
+    @apply flex items-center;
+  }
+
+  .data-row + .data-row {
+    @apply border-t border-stone-100;
+  }
+
+  .data-info {
+    @apply flex-grow;
+  }
+
+  .data-actions {
+    @apply flex-shrink-0 p-2 pr-6;
+  }
+
+  .row {
+    @apply p-4 flex items-center;
+  }
+
+  .row + .row {
+    @apply border-t border-stone-100;
+  }
+  
+  .row.tight {
+    @apply py-2;
+  }
+
+  .col-1 {
+    @apply p-2 w-full;
+  }
+
+  .col-2 {
+    @apply p-2 flex-shrink-0 w-1/2;
+  }
+
+  .col-3 {
+    @apply p-2 flex-shrink-0 w-1/3;
+  }
+
+  .row.tight .col-1 {
+    @apply py-1;
+  }
+
+  .row.tight .col-2 {
+    @apply py-1;
+  }
+
+  .row.tight .col-3 {
+    @apply py-1;
+  }
+
+  .col-tags {
+    @apply flex flex-wrap -m-1;
+  }
+
+  .col-actions {
+    @apply flex justify-end;
+  }
+
+  .col-actions > * {
+    @apply lg:-my-4;
+  }
+
+  .actions {
+    @apply flex justify-end;
+  }
+
+  .row-item + .row-item {
+    @apply border-t border-stone-100;
+  }
+
+  .tabs {
+    @apply inline-flex overflow-x-auto whitespace-nowrap bg-stone-100 rounded-xl;
+  }
+
+  .tabs .tab {
+    @apply h-10 px-4 bg-primary-100 flex items-center text-xs uppercase font-bold;
+  }
+
+  .tabs .tab.active {
+    @apply bg-amber-300;
+  }
+}

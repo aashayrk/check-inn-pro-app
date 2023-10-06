@@ -1,0 +1,9 @@
+{
+  "appId": "com.example.app",
+  "appName": "checkinn-pro-app",
+  "webDir": "dist",
+  "server": {
+    "androidScheme": "http",
+    "hostname": "localhost:5173"
+  }
+}
