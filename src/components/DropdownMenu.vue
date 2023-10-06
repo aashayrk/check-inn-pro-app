@@ -54,7 +54,7 @@ defineExpose({
 </script>
 <style scoped>
 .fade-blur-enter-active, .fade-blur-leave-active {
-  /* @apply duration-300; */
+  @apply duration-150;
 }
 .fade-blur-enter-from, .fade-blur-leave-to {
   @apply bg-opacity-0;

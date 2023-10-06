@@ -2,10 +2,10 @@
   <div class="flex items-center justify-between mb-2">
       
     <!-- Back Button -->
-    <div v-if="props.backTo" class="">
-      <router-link :to="props.backTo" class="btn btn-round btn-white btn-small">
+    <div>
+      <button @click="goBack()" class="btn btn-round btn-white btn-small">
         <msr-icon>arrow_back</msr-icon>
-      </router-link>
+      </button>
     </div>
 
     <!-- Page Title -->
@@ -15,8 +15,16 @@
   </div>
 </template>
 <script setup>
+import { useRouter } from 'vue-router';
+
 let props = defineProps([
   'backTo',
   'pageTitle'
 ])
+
+let router = useRouter();
+
+function goBack() {
+  router.go(-1);
+}
 </script>

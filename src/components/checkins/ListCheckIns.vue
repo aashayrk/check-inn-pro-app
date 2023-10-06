@@ -3,6 +3,17 @@
     <div v-if="getCheckInsReq.success">
       <page-topbar back-to="/" page-title="Check Ins"></page-topbar>
       <info-section section-title="Check Ins">
+        
+        <!-- old bills -->
+        <div class="p-6 flex justify-end">
+          <router-link to="/old-bills">
+            <button class="btn btn-primary">
+              <span>View Old Bills</span>
+              <msr-icon>arrow_forward</msr-icon>
+            </button>
+          </router-link>
+        </div>
+        
         <!-- <template #actions> -->
           <!-- <modal-dialog :disabled="userAbilities.deny('create', 'checkIns')">
             <template #trigger>
@@ -80,15 +91,15 @@
   
                       <!-- info -->
                       <div class="ml-4">
-                        <p class="leading-none text-xl mt-1">Room {{ checkIn.room.number }}</p>
+                        <p class="leading-none text-xl">Room {{ checkIn.room.number }}</p>
                         <p class="leading-none text-xs mt-1">
                           <span v-if="checkIn.guests[0].guest.title">{{ checkIn.guests[0].guest.title.name }}. </span>
                           <span>{{ checkIn.guests[0].guest.name }}</span>
-                          <span>, {{ checkIn.folio_number }}</span>
                         </p>
+                        <p class="leading-none text-xs mt-1">{{ checkIn.folio_number }}</p>
                       </div>
                     </div>
-                    <div class="xl:col-span-9 col-tags">
+                    <div class="col-tags">
                       <p class="tag bg-primary-200">In: {{ checkIn.in_time }}</p>
                       <p class="tag" :class="{
                           'bg-teal-200': checkIn.stay_ends_today,
@@ -111,36 +122,36 @@
   
               <!-- sub checkins -->
               <div v-for="(subCheckIn, index) in checkIn.subCheckIns" :key="index" class="row-item">
-                <div class="data-row pl-6">
+                <div class="data-row ml-2">
                   <div class="data-info">
-                    <div class="grid xl:grid-cols-12 gap-6 items-center p-6">
-                      <div class="xl:col-span-3">
-                        <div class="flex items-center">
-                          <div class="h-1 bg-primary-500 w-6 -ml-6"></div>
-                          <img :src="`/images/avatar-${subCheckIn.guests[0].guest.gender === 'Male' ? 'male' : 'female'}.svg`" class="w-16 h-16 rounded-full ring ring-primary-500">
-                          <div class="ml-4">
-                            <p class="leading-none font-bold">Room {{ subCheckIn.room.number }}</p>
-                            <p class="leading-none mt-2">
-                              <span v-if="subCheckIn.guests[0].guest.title">{{ subCheckIn.guests[0].guest.title.name }}. </span>
-                              <span>{{ subCheckIn.guests[0].guest.name }}</span>
-                            </p>
-                          </div>
+                    <div class="grid md:grid-cols-2 gap-6 items-center p-6 py-4">
+                      <div class="flex items-center">
+    
+                        <!-- avatar/photo -->
+                        <preview-document :documents="subCheckIn.guests[0].guest.documents" type="Photo">
+                          <template #trigger>
+                            <img :src="`${subCheckIn.guests[0].guest.avatar}`" class="w-12 h-12 rounded-full ring ring-primary-100 cursor-pointer">
+                          </template>
+                        </preview-document>
+    
+                        <!-- info -->
+                        <div class="ml-4">
+                          <p class="leading-none">Room {{ subCheckIn.room.number }}</p>
+                          <p class="leading-none text-xs mt-1">
+                            <span v-if="subCheckIn.guests[0].guest.title">{{ subCheckIn.guests[0].guest.title.name }}. </span>
+                            <span>{{ subCheckIn.guests[0].guest.name }}</span>
+                          </p>
+                          <p class="leading-none text-xs mt-1">{{ subCheckIn.folio_number }}</p>
                         </div>
                       </div>
-                      <div class="xl:col-span-9 col-tags">
-                        <p class="tag bg-primary-300">{{ subCheckIn.folio_number }}</p>
-                        <p class="tag bg-primary-200">{{ subCheckIn.in_time }}</p>
+                      <div class="col-tags">
+                        <p class="tag bg-primary-200">In: {{ subCheckIn.in_time }}</p>
                         <p class="tag" :class="{
                             'bg-teal-200': subCheckIn.stay_ends_today,
                             'bg-red-200': subCheckIn.pending_check_out,
                             'bg-primary-200': ! subCheckIn.pending_check_out && ! subCheckIn.stay_ends_today,
-                          }">
-                          {{ subCheckIn.out_time }}</p>
-  
-                        <p class="tag">Pax - {{ subCheckIn.adults + subCheckIn.extra_adults }} + {{ subCheckIn.children + subCheckIn.extra_children }}</p>
-                        <p class="tag" :class="subCheckIn.special_tariff ? 'bg-lime-300' : ''">
-                          {{ subCheckIn.special_tariff ? 'Special Tariff' : 'Rack Rate' }}
-                        </p>
+                          }">Out: {{ subCheckIn.out_time }}</p>
+    
                         <p class="tag bg-lime-300" v-if="subCheckIn.house_guest">House Guest</p>
                       </div>
                     </div>
@@ -148,9 +159,9 @@
                   <div class="data-actions flex">
           
                     <!-- details -->
-                    <a class="btn btn-round btn-small" :href="`/check-ins/${subCheckIn.id}`" v-if="userAbilities.deny('view', 'checkIns')">
+                    <router-link class="btn btn-round btn-small" :to="`/check-ins/${subCheckIn.id}`" v-if="userAbilities.allow('view', 'checkIns')">
                       <msr-icon>chevron_right</msr-icon>
-                    </a>
+                    </router-link>
                   </div>
                 </div>
               </div>

@@ -14,7 +14,7 @@
     
     <!-- panel -->
     <transition name="bottom-up">
-      <div class="fixed bottom-0 right-0 w-full max-h-[90%] bg-white rounded-t-xl overflow-y-auto z-20" 
+      <div class="fixed bottom-0 right-0 w-full max-h-[90%] overflow-y-auto z-20 bg-white" 
       :class="{
         'max-w-sm': props.size === 'xsm',
         'max-w-screen-sm': ! props.size || props.size === 'sm',
@@ -23,15 +23,19 @@
         'max-w-screen-xl': props.size === 'xl',
       }" 
       v-if="isOpen">
-        <!-- <div class="p-2 flex items-center justify-between">
-          <p class="leading-none text-xs font-bold pl-2">Modal Title</p>
-        </div> -->
-        <button class="btn btn-round btn-small bg-primary-300 border-b-2 border-primary-400 text-white absolute top-0 right-0 rounded-none rounded-tr-xl" @click.prevent="close">
-          <msr-icon>close</msr-icon>
-        </button>
+        <div class="flex items-center justify-between sticky top-0 bg-white">
+          <div class="h-10 flex items-center">
+            <p class="leading-none text-xs uppercase font-bold px-6">{{ props.dialogTitle ?? 'Modal Dialog' }}</p>
+          </div>
+          <button class="btn btn-round btn-small bg-stone-200 border-b-2 border-stone-300 absolute right-0 top-0 rounded-none" @click.prevent="close">
+            <msr-icon>close</msr-icon>
+          </button>
+        </div>
 
         <!-- content -->
-        <slot :open="open" :close="close" :isOpen="isOpen"></slot>
+        <div class="bg-white rounded-t-xl overflow-y-auto">
+          <slot :open="open" :close="close" :isOpen="isOpen"></slot>
+        </div>
       </div>
     </transition>
   </div>
@@ -40,6 +44,7 @@
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
 
 let props = defineProps([
+  'dialogTitle',
   'size',
   'disabled'
 ]);

@@ -16,11 +16,12 @@
 <style scoped>
 .fade-scale-enter-active,
 .fade-scale-leave-active {
-  @apply transition opacity-100 duration-150;
+  @apply transition opacity-100 duration-500;
+  animation-timing-function: ease-in-out;
 }
 
 .fade-scale-enter-from,
 .fade-scale-leave-to {
-  @apply opacity-0;
+  @apply opacity-25;
 }
 </style>

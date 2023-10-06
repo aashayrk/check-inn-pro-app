@@ -1,0 +1,102 @@
+<template>
+  <div>
+    <info-section section-title="Receipts" class="mt-2">
+      <template #actions>
+        <!-- <div class="actions">
+          <modal-dialog class="ml-1" ref="createReceiptDialog" :disabled="props.booking && (props.booking.checked_in === 1 || props.booking.no_show === 1 || props.booking.cancelled === 1)">
+            <template #trigger>
+              <button class="btn btn-primary" :disabled="props.booking && (props.booking.checked_in === 1 || props.booking.no_show === 1 || props.booking.cancelled === 1)">
+                <span>Create New</span>
+                <msr-icon>add</msr-icon>
+              </button>
+            </template>
+            <template #default="defaultProps">
+              <info-section section-title="Create Receipt">
+                <create-receipt :booking="booking" @close="onReceiptCreated(defaultProps, $event)"></create-receipt>
+              </info-section>
+            </template>
+          </modal-dialog>
+        </div> -->
+      </template>
+      <div v-if="getReceiptsReq.success">
+        <data-list :req="getReceiptsReq" :count="receiptGroups.length">
+          <div class="py-4">
+            <toggle-section class="row-item" v-for="(item, index) in receiptGroups" :key="index">
+              <template #title>
+                <div class="row tight">
+                  <div class="col-2">
+                    <p class="leading-none">{{ item.mode }}</p>
+                    <p class="leading-none text-xs mt-1">{{ item.receipts.length }} Receipts</p>
+                  </div>
+                  <div class="col-2">
+                    <p class="leading-none text-right currency">{{ item.sum }}</p>
+                  </div>
+                </div>
+              </template>
+              <div class="ml-2">
+                <list-receipts :booking="booking" :receipts="item.receipts"></list-receipts>
+              </div>
+            </toggle-section>
+          </div>
+          <div class="p-6">
+            <div class="rounded-xl bg-primary-100 p-6 py-4 grid grid-cols-2 gap-2 items-center">
+              <p class="leading-none">Total</p>
+              <p class="leading-none text-right text-xl currency">{{ sum }}</p>
+            </div>
+          </div>
+        </data-list>
+      </div>
+      <div v-else>
+        <loading-dots :progress="getReceiptsReq.progress" :message="getReceiptsReq.message"></loading-dots>
+      </div>
+    </info-section>
+  </div>
+</template>
+<script setup>
+// import CreateReceipt from './CreateReceipt.vue';
+import ListReceipts from './ListReceipts.vue';
+import { onMounted, provide, reactive, ref } from 'vue';
+import { useApi } from '@/services/api.js';
+
+let props = defineProps([
+  'bookingId',
+  'booking'
+]);
+
+let emits = defineEmits([
+  'total'
+]);
+
+let getReceiptsReq = reactive(useApi());
+let receipts = ref([]);
+let receiptGroups = ref([]);
+let sum = ref();
+
+function getReceipts() {
+  getReceiptsReq.send(
+    `/api/client-app/v1/bookings/${props.bookingId}/receipts`
+  )
+  .then (res => {
+    if (res) {
+      receipts.value = res.receipts;
+      receiptGroups.value = res.receiptGroups;
+      sum.value = res.sum;
+    }
+  });
+}
+
+provide('getReceipts', getReceipts);
+
+function onReceiptCreated(props, data) {
+  getReceipts();
+  props.close();
+}
+
+defineExpose({
+  getReceipts
+});
+
+onMounted(() => {
+  getReceipts();
+});
+</script>
