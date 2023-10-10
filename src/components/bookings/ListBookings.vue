@@ -1,7 +1,7 @@
 <template>
-  <page>
+  <page page-title="Bookings" tab-bar="true">
+    <page-topbar page-title="Bookings" menu="true"></page-topbar>
     <div v-if="getBookingsReq.success">
-      <page-topbar page-title="Bookings"></page-topbar>
       <info-section section-title="Bookings">
         <!-- <template #actions>
           <modal-dialog :disabled="! userAbilities.allow('create', 'bookings')">

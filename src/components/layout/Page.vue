@@ -1,11 +1,63 @@
 <template>
-  <div class="flex flex-col w-full min-h-screen bg-gray-100 overflow-y-auto">
-
+  <div class="flex flex-col w-full min-h-screen bg-stone-50 overflow-y-auto">
+    
     <!-- content -->
-    <div class="p-2">
+    <div class="content p-2 relative">
+      <div class="absolute top-0 left-0 bg-stone-100 w-full h-96 dummy -z-50"></div>
       <slot></slot>
     </div>
+
+    <!-- tabs bar -->
+    <transition>
+      <tab-bar v-if="props.tabBar && showTabBar"></tab-bar>
+    </transition>
   </div>
 </template>
 <script setup>
+import { ref, reactive, onMounted } from 'vue';
+import TabBar from './TabBar.vue';
+
+let props = defineProps([
+  'tabBar'
+])
+
+let pageObserver = null;
+let showTabBar = ref(false);
+
+function setupObserver() {
+
+  // setup intersection observer
+  pageObserver = reactive(
+    new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach(entry => {
+          showTabBar.value = entry.isIntersecting;
+        })
+      },
+      {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0,
+      }
+    )
+  )
+  
+  pageObserver.observe(document.querySelector('.dummy'));
+}
+
+onMounted(() => {
+  setupObserver();
+})
 </script>
+
+<style scoped>
+.v-enter-active, .v-leave-active {
+  @apply transition duration-300 opacity-100 translate-y-0;
+} 
+.v-leave-to {
+  @apply transition opacity-0 translate-y-4;
+}
+.v-enter-from {
+  @apply transition opacity-0;
+}
+</style>

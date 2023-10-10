@@ -1,16 +1,36 @@
 <template>
   <div class="flex items-center justify-between mb-2">
-      
-    <!-- Back Button -->
     <div>
-      <button @click="goBack()" class="btn btn-round btn-white btn-small">
-        <msr-icon>arrow_back</msr-icon>
+
+      <!-- menu button -->
+      <button class="btn btn-round btn-transparent" v-if="props.menu">
+        <msr-icon>menu</msr-icon>
       </button>
+
+      <!-- page info -->
+      <div class="flex items-center" v-else>
+
+        <!-- Back Button -->
+        <button @click="goBack()" class="btn btn-round btn-transparent">
+          <msr-icon>arrow_back</msr-icon>
+        </button>
+        
+        <!-- Page Title -->
+        <div class="px-2">
+          <p class="leading-none">{{ props.pageTitle ?? 'Page' }}</p>
+        </div>
+      </div>
     </div>
 
-    <!-- Page Title -->
-    <div class="p-2 pr-4">
-      <p class="leading-none">{{ props.pageTitle ?? 'Page' }}</p>
+    <!-- client info -->
+    <div class="flex items-center">
+      <div class="mr-2 text-right">
+        <p class="leading-none">Parth Resorts</p>
+        <p class="leading-none text-xs mt-1">jagdish</p>
+      </div>
+      <button class="btn btn-primary btn-round">
+        <span class="text-3xl font-normal">S</span>
+      </button>
     </div>
   </div>
 </template>
@@ -18,7 +38,7 @@
 import { useRouter } from 'vue-router';
 
 let props = defineProps([
-  'backTo',
+  'menu',
   'pageTitle'
 ])
 
