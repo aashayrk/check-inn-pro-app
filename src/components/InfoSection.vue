@@ -2,7 +2,7 @@
   <div class="bg-white rounded-xl shadow-sm">
 
     <!-- title -->
-    <div class="h-10 px-6 bg-primary-200 rounded-t-xl flex items-center">
+    <div class="h-10 px-6 border-b border-stone-100 rounded-t-xl flex items-center">
       <p class="leading-none text-xs font-bold uppercase relative top-0.5">{{ props.sectionTitle ?? 'Page Section' }}</p>
     </div>
 

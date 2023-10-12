@@ -36,16 +36,14 @@
               <div class="data-actions">
   
                 <!-- list transactions -->
-                <modal-dialog>
+                <modal-dialog dialog-title="Transactions">
                   <template #trigger>
                     <button class="btn btn-small btn-round">
                       <msr-icon>chevron_right</msr-icon>
                     </button>
                   </template>
                   <template #default="defaultProps">
-                    <info-section :section-title="`Transactions for ${item.type.code} - ${item.type.name}`">
-                      <list-transactions :check-in="checkIn" :group="item" :transactions="item.transactions" :key="checkIn.id"></list-transactions>
-                    </info-section>
+                    <list-transactions :check-in="checkIn" :group="item" :transactions="item.transactions" :key="checkIn.id"></list-transactions>
                   </template>
                 </modal-dialog>
               </div>
@@ -101,7 +99,10 @@ let totalCgst = ref();
 let totalSgst = ref();
 let totalAmount = ref();
 
+let transactionsDialog = ref(null);
+
 let userAbilities = inject('userAbilities');
+let dialog = inject('dialog');
 
 function getTransactions() {
   getTransactionsReq.send(
@@ -133,4 +134,8 @@ defineExpose({
 onMounted(() => {
   getTransactions();
 });
+
+function onSwipeDown(e) {
+  console.log(e)
+}
 </script>

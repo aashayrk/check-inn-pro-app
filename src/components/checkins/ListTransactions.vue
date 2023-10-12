@@ -28,16 +28,14 @@
           </button> -->
   
           <!-- manage transaction -->
-          <modal-dialog>
+          <modal-dialog dialog-title="Transactions Details">
             <template #trigger>
               <button class="btn btn-small btn-round ml-1" title="View Details">
                 <msr-icon>chevron_right</msr-icon>
               </button>
             </template>
             <template #default="defaultProps">
-              <info-section section-title="Transaction Details">
-                <manage-transaction :transaction="item" :check-in="props.checkIn" @transaction-updated="section = 'details'; getTransactions(props.checkIn)" @transaction-deleted="section = 'details'; getTransactions(props.checkIn);"></manage-transaction>
-              </info-section>
+              <manage-transaction :transaction="item" :check-in="props.checkIn" @transaction-updated="section = 'details'; getTransactions(props.checkIn)" @transaction-deleted="section = 'details'; getTransactions(props.checkIn);"></manage-transaction>
             </template>
           </modal-dialog>
         </div>

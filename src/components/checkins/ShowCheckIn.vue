@@ -9,18 +9,18 @@
           <template #actions>
 
             <!-- billing -->
-            <a :href="`/check-ins/${route.params.id}/billing`" title="Go to Billing" class="btn btn-primary ml-1" v-if="userAbilities.allow('viewBilling', 'checkIns')">
+            <!-- <a :href="`/check-ins/${route.params.id}/billing`" title="Go to Billing" class="btn btn-primary ml-1" v-if="userAbilities.allow('viewBilling', 'checkIns')">
               <span>View Billing</span>
               <msr-icon>arrow_forward</msr-icon>
-            </a>
+            </a> -->
 
             <!-- other actions -->
             <dropdown-menu size="md" class="ml-1" v-if="checkIn && checkIn.checked_out === 0">
-              <template #trigger>
+              <!-- <template #trigger>
                 <button class="btn btn-round">
                   <msr-icon>more_vert</msr-icon>
                 </button>
-              </template>
+              </template> -->
 
               <!-- items -->
               <template #default="dropdownProps">
