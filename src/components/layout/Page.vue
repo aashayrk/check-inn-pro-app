@@ -1,9 +1,12 @@
 <template>
-  <div class="flex flex-col w-full min-h-screen bg-stone-50 overflow-y-auto">
+  <div class="flex flex-col w-full min-h-screen bg-stone-200 overflow-y-auto">
     
     <!-- content -->
-    <div class="content p-2 relative">
-      <div class="absolute top-0 left-0 bg-stone-100 w-full h-96 dummy -z-50"></div>
+    <div class="content p-2 relative" :class="{'pb-24': props.tabBar}">
+
+      <!-- dummy for page scroll detection -->
+      <div class="absolute top-0 left-0 bg-stone-200 w-full h-96 dummy-0 -z-50"></div>
+      <div class="absolute bottom-0 left-0 bg-stone-200 w-full h-96 dummy-1 -z-50"></div>
       <slot></slot>
     </div>
 
@@ -30,9 +33,7 @@ function setupObserver() {
   pageObserver = reactive(
     new IntersectionObserver(
       (entries, observer) => {
-        entries.forEach(entry => {
-          showTabBar.value = entry.isIntersecting;
-        })
+        showTabBar.value = entries.some(entry => entry.isIntersecting);
       },
       {
         root: null,
@@ -42,7 +43,8 @@ function setupObserver() {
     )
   )
   
-  pageObserver.observe(document.querySelector('.dummy'));
+  pageObserver.observe(document.querySelector('.dummy-0'));
+  pageObserver.observe(document.querySelector('.dummy-1'));
 }
 
 onMounted(() => {
