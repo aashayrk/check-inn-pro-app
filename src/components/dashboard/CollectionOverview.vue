@@ -92,19 +92,20 @@
 </template>
 
 <script setup>
-import { onMounted, reactive, ref } from 'vue';
+import { onMounted, reactive, ref, onBeforeUnmount } from 'vue';
 import { useApi } from '@/services/api.js';
 import ApexCharts from 'apexcharts';
 import moment from 'moment';
 
 let data = ref();
 let dataReq = reactive(useApi());
-
 let filters = reactive({
   from: moment().subtract(1, 'month'),
   to: moment(),
   types: []
 });
+
+let chart = null;
 
 async function drawChart() {
   let res = await dataReq.send(
@@ -119,29 +120,43 @@ async function drawChart() {
   );
 
   data.value = res;
-  document.getElementById('collection-chart').innerHTML = '';
 
   filters.types = [];
   res.payModes.map(mode => {
     filters.types.push(mode.code);
   });
 
-  let chart = new ApexCharts(document.getElementById('collection-chart'), {
+  let chartOptions = {
     chart: {
       type: 'pie',
       height: '100%',
     },
-    series: data.value.payModes.map(item => +item.total),
+    series: data.value.payModes.map(item => +item.total).some(total => total > 0) ? 
+      data.value.payModes.map(item => +item.total) : [],
+
     labels: data.value.payModes.map(item => item.name),
     dataLabels: {
       enabled: false,
     },
     legend: {
       position: 'bottom',
-    }
-  });
+    },
+    noData: {
+      text: 'No collection for the duration!',
+      style: {
+        fontFamily: 'Manrope'
+      }
+    },
+  }
 
-  chart.render();
+  if (chart) {
+    chart.updateOptions(chartOptions);
+  }
+  else {
+    chart = new ApexCharts(document.getElementById('collection-chart'), chartOptions);
+    chart.render();
+  }
+
 }
 
 function onFiltersApplied(modal) {
@@ -155,4 +170,8 @@ onMounted(() => {
 
   drawChart();
 });
+
+onBeforeUnmount(() => {
+  chart.destroy();
+})
 </script>

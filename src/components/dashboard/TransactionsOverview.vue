@@ -92,19 +92,20 @@
 </template>
 
 <script setup>
-import { onMounted, reactive, ref } from 'vue';
+import { onMounted, reactive, ref, onBeforeUnmount } from 'vue';
 import moment from 'moment';
 import { useApi } from '@/services/api.js';
 import ApexCharts from 'apexcharts';
 
 let data = ref();
 let dataReq = reactive(useApi());
-
 let filters = reactive({
   from: moment().subtract(1, 'month'),
   to: moment(),
   types: []
 });
+
+let chart = null;
 
 async function drawChart() {
   let res = await dataReq.send(
@@ -125,33 +126,36 @@ async function drawChart() {
     filters.types.push(type.code);
   });
 
-  document.getElementById('transactions-overview').innerHTML = '';
-
-  let chart = new ApexCharts(document.getElementById('transactions-overview'), {
+  let chartOptions = {
     chart: {
       type: 'pie',
       height: '100%',
     },
-    series: data.value.transTypes.map(pm => +pm.total),
+    series: data.value.transTypes.map(pm => +pm.total).some(total => total > 0) ? 
+      data.value.transTypes.map(pm => +pm.total) : [],
+
     labels: data.value.transTypes.map(pm => pm.name),
     dataLabels: {
       enabled: false,
     },
     legend: {
       position: 'bottom',
-    }
-  });
+    },
+    noData: {
+      text: 'No transactions for the duration!',
+      style: {
+        fontFamily: 'Manrope'
+      }
+    },
+  }
 
-  chart.render();
-}
-
-function toggleAllSelection() {
-  // if (filters.types.length === data.value.allTransTypes.length) {
-  //   filters.types = [];
-  // }
-  // else {
-    filters.types = data.value.allTransTypes.map(item => item.code);
-  // }
+  if (chart) {
+    chart.updateOptions(chartOptions);
+  }
+  else {
+    chart = new ApexCharts(document.getElementById('transactions-overview'), chartOptions);
+    chart.render();
+  }
 }
 
 function onFiltersApplied(modal) {
@@ -165,4 +169,8 @@ onMounted(() => {
 
   drawChart();
 });
+
+onBeforeUnmount(() => {
+  chart.destroy();
+})
 </script>

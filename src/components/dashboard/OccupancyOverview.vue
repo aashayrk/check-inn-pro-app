@@ -93,7 +93,7 @@
 </template>
 
 <script setup>
-import { onMounted, reactive, ref } from 'vue';
+import { onBeforeUnmount, onMounted, reactive, ref } from 'vue';
 import moment from 'moment';
 import { useApi } from '@/services/api.js';
 import ApexCharts from 'apexcharts';
@@ -132,6 +132,8 @@ let filters = reactive({
   types: []
 });
 
+let chart = null;
+
 async function drawChart() {
   let res = await req.send(
     `/api/client/v1/dashboard/occupancy-status`,
@@ -145,24 +147,37 @@ async function drawChart() {
   );
 
   data.value = res;
-  document.getElementById('chart-container').innerHTML = '';
 
-  let chart = new ApexCharts(document.getElementById('chart-container'), {
+  let chartOptions = {
     chart: {
       type: 'pie',
       height: '100%',
     },
+    series: res.occupancySummary.map(item => item.count).some(count => count > 0) ? 
+      res.occupancySummary.map(item => item.count) : [],
+
     labels: res.occupancySummary.map(item => item.status),
-    series: res.occupancySummary.map(item => item.count),
     dataLabels: {
       enabled: false,
     },
     legend: {
       position: 'bottom',
-    }
-  });
+    },
+    noData: {
+      text: 'No occupancy data for now!',
+      style: {
+        fontFamily: 'Manrope'
+      }
+    },
+  }
 
-  chart.render();
+  if (chart) {
+    chart.updateOptions(chartOptions);
+  }
+  else {
+    chart = new ApexCharts(document.getElementById('chart-container'), chartOptions);
+    chart.render();
+  }
 }
 
 function onFiltersApplied(modal) {
@@ -177,4 +192,8 @@ onMounted(() => {
 
   drawChart();
 });
+
+onBeforeUnmount(() => {
+  chart.destroy();
+})
 </script>

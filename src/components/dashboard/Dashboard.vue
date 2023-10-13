@@ -19,7 +19,6 @@
   </div>
 </template>
 <script setup>
-import TabBar from '@/components/layout/TabBar.vue';
 import OccupancyOverview from './OccupancyOverview.vue';
 import TransactionsOverview from './TransactionsOverview.vue';
 import CollectionOverview from './CollectionOverview.vue';
