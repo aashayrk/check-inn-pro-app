@@ -1,19 +1,24 @@
 <template>
-  <div class="flex flex-col w-full min-h-screen bg-stone-200 overflow-y-auto">
+  <div>
+
+    <!-- screen filler -->
+    <div class="fixed inset-0 w-full h-full bg-stone-200 -z-50"></div>
     
     <!-- content -->
-    <div class="content p-2 relative" :class="{'pb-24': props.tabBar}">
+    <div class="content p-2 relative">
 
       <!-- dummy for page scroll detection -->
       <div class="absolute top-0 left-0 bg-stone-200 w-full h-96 dummy-0 -z-50"></div>
-      <div class="absolute bottom-0 left-0 bg-stone-200 w-full h-96 dummy-1 -z-50"></div>
+      <!-- <div class="absolute bottom-0 left-0 bg-stone-200 w-full h-96 dummy-1 -z-50"></div> -->
       <slot></slot>
     </div>
-
+    
     <!-- tabs bar -->
-    <transition>
-      <tab-bar v-if="props.tabBar && showTabBar"></tab-bar>
-    </transition>
+    <tab-bar v-if="props.tabBar" :show="showTabBar" class="mt-2">
+      
+      <!-- provisioned area above tab-bar -->
+      <slot name="bottom"></slot>
+    </tab-bar>
   </div>
 </template>
 <script setup>
@@ -44,22 +49,10 @@ function setupObserver() {
   )
   
   pageObserver.observe(document.querySelector('.dummy-0'));
-  pageObserver.observe(document.querySelector('.dummy-1'));
+  // pageObserver.observe(document.querySelector('.dummy-1'));
 }
 
 onMounted(() => {
   setupObserver();
 })
 </script>
-
-<style scoped>
-.v-enter-active, .v-leave-active {
-  @apply transition duration-300 opacity-100 translate-y-0;
-} 
-.v-leave-to {
-  @apply transition opacity-0 translate-y-4;
-}
-.v-enter-from {
-  @apply transition opacity-0;
-}
-</style>

@@ -13,12 +13,7 @@
 
     <!-- panel -->
     <transition name="bottom-up">
-      <div class="panel bg-white rounded-t-xl fixed bottom-0 right-0 w-full max-h-[90%] overflow-y-auto z-20" v-if="isOpen" :class="{
-          'w-40': ! props.size || props.size === 'sm',
-          'w-48': props.size === 'md',
-          'w-60': props.size === 'lg',
-          'w-72': props.size === 'xl',
-        }" >
+      <div class="panel bg-white rounded-t-xl fixed bottom-0 right-0 w-full md:max-w-sm max-h-[90%] overflow-y-auto z-20" v-if="isOpen">
         <slot :open="open" :close="close" :isOpen="isOpen"></slot>
       </div>
     </transition>
