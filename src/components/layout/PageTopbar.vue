@@ -1,11 +1,15 @@
 <template>
-  <div class="flex items-center justify-between mb-2">
+  <div class="flex items-center justify-between bg-primary-50 mb-2 rounded-b-xl sticky top-0 shadow-md z-10 p-2">
     <div>
 
-      <!-- menu button -->
-      <button class="btn btn-round btn-transparent" v-if="props.menu">
-        <msr-icon>menu</msr-icon>
-      </button>
+      <!-- main menu -->
+      <client-sidebar v-if="props.menu">
+        <template #trigger>
+          <span class="btn btn-transparent">
+            <msr-icon>menu</msr-icon>
+          </span>
+        </template>
+      </client-sidebar>
 
       <!-- page info -->
       <div class="flex items-center" v-else>
@@ -23,19 +27,15 @@
     </div>
 
     <!-- client info -->
-    <div class="flex items-center">
-      <div class="mr-2 text-right">
-        <p class="leading-none">Parth Resorts</p>
-        <p class="leading-none text-xs mt-1">jagdish</p>
-      </div>
-      <button class="btn btn-primary btn-round">
-        <span class="text-3xl font-normal">S</span>
-      </button>
+    <div>
+      <user-widget></user-widget>
     </div>
   </div>
 </template>
 <script setup>
 import { useRouter } from 'vue-router';
+import UserWidget from '@/components/UserWidget.vue';
+import ClientSidebar from '@/components/ClientSidebar.vue';
 
 let props = defineProps([
   'menu',

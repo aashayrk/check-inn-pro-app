@@ -8,6 +8,37 @@
   </div>
 </template>
 <script setup>
+import { App } from '@capacitor/app';
+import { StatusBar, Style } from '@capacitor/status-bar';
+import { useModal } from './services/modal.js';
+import { onMounted, provide } from 'vue';
+import { useRouter } from 'vue-router';
+
+let router = useRouter();
+let modal = useModal();
+provide('modal', modal);
+
+App.addListener('backButton', e => {
+  if (! modal.close()) {
+    router.go(-1);
+  }
+})
+
+onMounted(() => {
+  document.addEventListener('keyup', (e) => {
+    if (e.key === 'Escape') {
+      modal.close();
+    }
+  });
+
+  StatusBar.setBackgroundColor({
+    color: '#F6FAFE',
+  })
+
+  StatusBar.setStyle({
+    style: Style.Light,
+  })
+})
 </script>
 <style scoped>
 .fade-scale-enter-active,

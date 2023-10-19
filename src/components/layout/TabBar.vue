@@ -1,12 +1,12 @@
 <template>
-  <div class="fixed bottom-0 right-0 w-full md:max-w-md p-2">
+  <div class="fixed bottom-0 right-0 w-full md:max-w-md">
     <div class="bg-white shadow-md" :class="props.show ? 'rounded-t-xl -mb-2 pb-2' : 'rounded-xl'">
       <slot></slot>
     </div>
 
     <!-- tabs -->
     <transition>
-      <div class="flex bg-primary-700 text-white rounded-xl shadow-md" v-if="props.show">
+      <div class="flex bg-primary-700 text-white rounded-t-xl shadow-md" v-if="props.show">
 
         <!-- Dashboard -->
         <router-link to="/" class="block text-center p-2 py-4 w-1/5" :class="{'text-amber-400': route.path === '/'}">

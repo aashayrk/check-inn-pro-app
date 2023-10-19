@@ -1,7 +1,7 @@
 <template>
 
   <!-- Occupancy Status -->
-  <div class="bg-white shadow-sm rounded-xl">
+  <div class="bg-white shadow-sm">
     <div class="title h-10 px-6 flex items-center border-b border-stone-100">
       <p class="leading-none font-bold uppercase text-xs">Occupancy Status</p>
     </div>
@@ -30,7 +30,7 @@
               </div> -->
               <div>
                 <div class="flex justify-between items-center mb-6">
-                  <div class="col-tags">
+                  <div class="col-1 col-tags">
                     <p class="tag bg-primary-200">Status</p>
                   </div>
                   <div class="actions">
@@ -62,7 +62,7 @@
         </modal-dialog>
       </div>
     </div>
-    <div class="grid lg:grid-cols-2 items-center">
+    <div class="grid lg:grid-cols-2 items-center" v-if="req.success">
       <div class="p-6 lg:mt-12">
         
         <!-- chart -->
@@ -89,11 +89,12 @@
         </div>
       </div>
     </div>
+    <loading-dots v-else :progress="req.progress" :message="req.message"></loading-dots>
   </div>
 </template>
 
 <script setup>
-import { onBeforeUnmount, onMounted, reactive, ref } from 'vue';
+import { nextTick, onBeforeUnmount, onMounted, reactive, ref } from 'vue';
 import moment from 'moment';
 import { useApi } from '@/services/api.js';
 import ApexCharts from 'apexcharts';
@@ -146,37 +147,41 @@ async function drawChart() {
     }
   );
 
-  data.value = res;
-
-  let chartOptions = {
-    chart: {
-      type: 'pie',
-      height: '100%',
-    },
-    series: res.occupancySummary.map(item => item.count).some(count => count > 0) ? 
-      res.occupancySummary.map(item => item.count) : [],
-
-    labels: res.occupancySummary.map(item => item.status),
-    dataLabels: {
-      enabled: false,
-    },
-    legend: {
-      position: 'bottom',
-    },
-    noData: {
-      text: 'No occupancy data for now!',
-      style: {
-        fontFamily: 'Manrope'
-      }
-    },
-  }
-
-  if (chart) {
-    chart.updateOptions(chartOptions);
-  }
-  else {
-    chart = new ApexCharts(document.getElementById('chart-container'), chartOptions);
-    chart.render();
+  if (res) {
+    data.value = res;
+  
+    let chartOptions = {
+      chart: {
+        type: 'pie',
+        height: '100%',
+      },
+      series: res.occupancySummary.map(item => item.count).some(count => count > 0) ? 
+        res.occupancySummary.map(item => item.count) : [],
+  
+      labels: res.occupancySummary.map(item => item.status),
+      dataLabels: {
+        enabled: false,
+      },
+      legend: {
+        position: 'bottom',
+      },
+      noData: {
+        text: 'No occupancy data for now!',
+        style: {
+          fontFamily: 'Manrope'
+        }
+      },
+    }
+  
+    if (chart) {
+      chart.updateOptions(chartOptions);
+    }
+    else {
+      nextTick(() => {
+        chart = new ApexCharts(document.getElementById('chart-container'), chartOptions);
+        chart.render();
+      })
+    }
   }
 }
 
@@ -194,6 +199,8 @@ onMounted(() => {
 });
 
 onBeforeUnmount(() => {
-  chart.destroy();
+  if (chart) {
+    chart.destroy();
+  }
 })
 </script>

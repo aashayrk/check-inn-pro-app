@@ -102,7 +102,6 @@ let totalAmount = ref();
 let transactionsDialog = ref(null);
 
 let userAbilities = inject('userAbilities');
-let dialog = inject('dialog');
 
 function getTransactions() {
   getTransactionsReq.send(

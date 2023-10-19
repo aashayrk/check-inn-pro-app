@@ -1,7 +1,7 @@
 <template>
-  <page page-title="Old Bills" back-to="/">
+  <page page-title="Old Bills">
+    <page-topbar page-title="All Old Bills"></page-topbar>
     <div v-if="getCheckInsReq.success">
-      <page-topbar back-to="/" page-title="All Old Bills"></page-topbar>
       <info-section section-title="Old Bills">
         <div class="actions p-6">
 

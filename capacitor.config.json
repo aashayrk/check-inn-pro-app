@@ -3,7 +3,7 @@
   "appName": "checkinn-pro-app",
   "webDir": "dist",
   "server": {
-    "androidScheme": "http",
-    "hostname": "localhost:5173"
+    "scheme": "http",
+    "hostname": "app.checkinn-pro.com"
   }
 }

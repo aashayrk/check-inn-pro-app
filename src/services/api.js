@@ -27,17 +27,15 @@ export function useApi () {
     .then (res => {
       progress.value = false;
       success.value = true;
-
-      if (res.data) {
-        message.value = res.data.message && res.data.message.length ? res.data.message : 'Done.';
-      }
-      else {
-        message.value = 'Done.';
-      }
-
+      message.value = res.data.message;
       errors.value = {};
 
-      return res.data ? res.data.data : true;
+      if (res.data.data) {
+        return res.data.data;
+      }
+      else {
+        return true;
+      }
     })
     .catch (err => {
       progress.value = false;

@@ -1,7 +1,7 @@
 <template>
 
   <!-- Collection Ovreview -->
-  <div class="bg-white shadow-sm rounded-xl">
+  <div class="bg-white shadow-sm mt-2">
     <div class="title h-10 px-6 flex items-center border-b border-stone-100">
       <p class="leading-none font-bold uppercase text-xs">Collection Overview</p>
     </div>
@@ -29,7 +29,7 @@
               </div>
               <div>
                 <div class="flex justify-between items-center my-6">
-                  <div class="col-tags">
+                  <div class="col-1 col-tags">
                     <p class="tag bg-primary-200">Transaction Types</p>
                   </div>
                   <div class="actions">
@@ -61,7 +61,7 @@
         </modal-dialog>
       </div>
     </div>
-    <div class="grid lg:grid-cols-2 items-center">
+    <div class="grid lg:grid-cols-2 items-center" v-if="dataReq.success">
       <div class="p-6 lg:mt-12">
         
         <!-- chart -->
@@ -88,11 +88,12 @@
         </div>
       </div>
     </div>
+    <loading-dots v-else :progress="dataReq.progress"></loading-dots>
   </div>
 </template>
 
 <script setup>
-import { onMounted, reactive, ref, onBeforeUnmount } from 'vue';
+import { onMounted, reactive, ref, onBeforeUnmount, nextTick } from 'vue';
 import { useApi } from '@/services/api.js';
 import ApexCharts from 'apexcharts';
 import moment from 'moment';
@@ -119,44 +120,47 @@ async function drawChart() {
     }
   );
 
-  data.value = res;
-
-  filters.types = [];
-  res.payModes.map(mode => {
-    filters.types.push(mode.code);
-  });
-
-  let chartOptions = {
-    chart: {
-      type: 'pie',
-      height: '100%',
-    },
-    series: data.value.payModes.map(item => +item.total).some(total => total > 0) ? 
-      data.value.payModes.map(item => +item.total) : [],
-
-    labels: data.value.payModes.map(item => item.name),
-    dataLabels: {
-      enabled: false,
-    },
-    legend: {
-      position: 'bottom',
-    },
-    noData: {
-      text: 'No collection for the duration!',
-      style: {
-        fontFamily: 'Manrope'
-      }
-    },
+  if (res) {
+    data.value = res;
+  
+    filters.types = [];
+    res.payModes.map(mode => {
+      filters.types.push(mode.code);
+    });
+  
+    let chartOptions = {
+      chart: {
+        type: 'pie',
+        height: '100%',
+      },
+      series: data.value.payModes.map(item => +item.total).some(total => total > 0) ? 
+        data.value.payModes.map(item => +item.total) : [],
+  
+      labels: data.value.payModes.map(item => item.name),
+      dataLabels: {
+        enabled: false,
+      },
+      legend: {
+        position: 'bottom',
+      },
+      noData: {
+        text: 'No collection for the duration!',
+        style: {
+          fontFamily: 'Manrope'
+        }
+      },
+    }
+  
+    if (chart) {
+      chart.updateOptions(chartOptions);
+    }
+    else {
+      nextTick(() => {
+        chart = new ApexCharts(document.getElementById('collection-chart'), chartOptions);
+        chart.render();
+      })
+    }
   }
-
-  if (chart) {
-    chart.updateOptions(chartOptions);
-  }
-  else {
-    chart = new ApexCharts(document.getElementById('collection-chart'), chartOptions);
-    chart.render();
-  }
-
 }
 
 function onFiltersApplied(modal) {
@@ -172,6 +176,8 @@ onMounted(() => {
 });
 
 onBeforeUnmount(() => {
-  chart.destroy();
+  if (chart) {
+    chart.destroy();
+  }
 })
 </script>

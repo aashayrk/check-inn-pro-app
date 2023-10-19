@@ -1,6 +1,6 @@
 <template>
   <page>
-    <page-topbar back-to="/check-ins" page-title="Check In Details"></page-topbar>
+    <page-topbar page-title="Check In Details"></page-topbar>
     <div class="two-col-grid gap-2">
       
       <!-- col 1 -->
@@ -9,10 +9,10 @@
           <template #actions>
 
             <!-- billing -->
-            <!-- <a :href="`/check-ins/${route.params.id}/billing`" title="Go to Billing" class="btn btn-primary ml-1" v-if="userAbilities.allow('viewBilling', 'checkIns')">
+            <router-link :to="`/check-ins/${route.params.id}/billing`" title="Go to Billing" class="btn btn-primary ml-1" v-if="userAbilities.allow('viewBilling', 'checkIns')">
               <span>View Billing</span>
               <msr-icon>arrow_forward</msr-icon>
-            </a> -->
+            </router-link>
 
             <!-- other actions -->
             <dropdown-menu size="md" class="ml-1" v-if="checkIn && checkIn.checked_out === 0">

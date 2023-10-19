@@ -22,8 +22,8 @@
         'max-w-screen-lg': props.size === 'lg',
         'max-w-screen-xl': props.size === 'xl',
       }" 
-      v-if="isOpen">
-        <div class="flex items-center justify-between sticky top-0 bg-white">
+      v-if="isOpen" ref="panel">
+        <div class="flex items-center justify-between sticky top-0 bg-white z-10">
           <div class="h-10 flex items-center">
             <p class="leading-none text-xs uppercase font-bold px-6">{{ props.dialogTitle ?? 'Modal Dialog' }}</p>
           </div>
@@ -41,7 +41,7 @@
   </div>
 </template>
 <script setup>
-import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
+import { computed, inject, nextTick, onBeforeUnmount, onMounted, ref } from 'vue';
 
 let props = defineProps([
   'dialogTitle',
@@ -49,6 +49,8 @@ let props = defineProps([
   'disabled'
 ]);
 
+let panel = ref(null);
+let modal = inject('modal');
 let isOpen = ref(false);
 let emits = defineEmits([
   'open',
@@ -58,21 +60,21 @@ let emits = defineEmits([
 function open () {
   if (! props.disabled) {
     isOpen.value = true;
-    emits('open');
+
+    if (modal.register(isOpen)) {
+      emits('open');
+    };
   }
 }
 
 function close () {
-  isOpen.value = false;
-  emits('close');
+  if (modal.close()) {
+    emits('close');
+  };
 }
 
 onMounted(() => {
-  document.addEventListener('keyup', (e) => {
-    if (e.key === 'Escape') {
-      close();
-    }
-  });
+  //
 });
 
 onBeforeUnmount(() => {

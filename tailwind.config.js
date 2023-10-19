@@ -36,6 +36,10 @@ export default {
         shade: '#1746a2'
       }
     },
+    fontWeight: {
+      'normal': '500',
+      'bold': '800',
+    },
   },
   plugins: [],
 }

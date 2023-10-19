@@ -104,7 +104,7 @@ function getReceipts() {
       receiptGroups.value = res.receiptGroups;
       sum.value = res.sum;
 
-      emits('total', amount);
+      emits('total', sum.value);
     }
   });
 }

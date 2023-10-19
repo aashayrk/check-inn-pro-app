@@ -1,51 +1,56 @@
 <template>
-  <dropdown-menu size="lg" class="ml-2" v-if="authUser.user">
+  <dropdown-menu class="ml-2" v-if="authUser.user">
     <template #trigger>
       <div class="flex items-center">
-        <span class="btn btn-primary btn-round">
-          <p class="leading-none text-3xl font-black">{{ authUser.user.username.substring(0, 1).toUpperCase() }}</p>
-        </span>
-        <div class="ml-2 hidden md:block">
+        <div class="mr-2 text-right">
           <p class="leading-none" :title="authUser.user.username">{{ authUser.user.username }}</p>
-          <p class="leading-none text-xs mt-1" :title="authUser.user.name">{{ truncate(authUser.user.name) }}</p>
+          <p class="leading-none text-xs mt-1" :title="authUser.client.email_address">{{ truncate(authUser.client.email_address) }}</p>
         </div>
+        <span class="btn btn-primary btn-round">
+          <p class="leading-none text-3xl font-normal">{{ authUser.user.username.substring(0, 1).toUpperCase() }}</p>
+        </span>
       </div>
     </template>
-    <div class="p-2">
+    <div>
 
       <!-- user profile -->
-      <a href="/my-profile" class="btn btn-transparent w-full">
-        <msr-icon>person</msr-icon>
-        <span>My Profile</span>
-      </a>
-
-      <!-- app profile -->
-      <a href="/app-profile" class="btn btn-transparent w-full">
-        <msr-icon>apartment</msr-icon>
-        <span>App Profile</span>
-      </a>
+      <div class="row-item">
+        <router-link to="/my-profile">
+          <div class="flex justify-between items-center p-6 py-4">
+            <div class="flex items-center">
+              <msr-icon>person</msr-icon>
+              <p class="leading-none ml-2">My Profile</p>
+            </div>
+            <msr-icon>arrow_forward</msr-icon>
+          </div>
+        </router-link>
+      </div>
 
       <!-- logout -->
-      <form action="/logout" method="POST">
-        <input type="hidden" name="_token" :value="csrfToken">
-        <button class="btn btn-transparent w-full" type="submit">
-          <msr-icon>power_rounded</msr-icon>
-          <span>Logout</span>
-        </button>
-      </form>
+      <div class="row-item">
+        <router-link to="/my-profile" class="row-item">
+          <div class="flex justify-between items-center p-6 py-4">
+            <div class="flex items-center">
+              <msr-icon>logout</msr-icon>
+              <p class="leading-none ml-2">Logout</p>
+            </div>
+            <msr-icon>arrow_forward</msr-icon>
+          </div>
+        </router-link>
+      </div>
     </div>
   </dropdown-menu>
 </template>
 <script setup>
 import { reactive, computed } from 'vue';
-import { useUser } from '@/services/user';
+import { useUser } from '@/services/user.js';
 
 let authUser = reactive(useUser());
 let csrfToken = computed(() => {
   return document.querySelector('meta[name=csrf-token]').getAttribute('content');
 });
 
-function truncate(string, length = 8) {
+function truncate(string, length = 16) {
   if (string.length > length) {
     return string.substring(0, length) + '...';
   }

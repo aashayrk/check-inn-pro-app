@@ -12,7 +12,13 @@
   },
   "dependencies": {
     "@capacitor/android": "^5.4.1",
+    "@capacitor/app": "^5.0.6",
+    "@capacitor/browser": "^5.1.0",
+    "@capacitor/filesystem": "^5.1.4",
     "@capacitor/preferences": "^5.0.6",
+    "@capacitor/share": "^5.0.6",
+    "@capacitor/status-bar": "^5.0.6",
+    "@capacitor/toast": "^5.0.6",
     "apexcharts": "^3.43.0",
     "autoprefixer": "^10.4.16",
     "axios": "^1.5.1",

@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white rounded-xl shadow-sm">
+  <div class="bg-white rounded-none">
 
     <!-- title -->
     <div class="h-10 px-6 border-b border-stone-100 rounded-t-xl flex items-center">
