@@ -1,8 +1,8 @@
 <template>
-  <page page-title="Bookings" tab-bar="true">
-    <page-topbar page-title="Bookings" menu="true"></page-topbar>
+  <page page-title="Cancelled Bookings" tab-bar="true">
+    <page-topbar page-title="Cancelled Bookings"></page-topbar>
     <div v-if="getBookingsReq.success">
-      <info-section section-title="Bookings">
+      <info-section section-title="Cancelled Bookings">
         <!-- <template #actions>
           <modal-dialog :disabled="! userAbilities.allow('create', 'bookings')">
             <template #trigger>
@@ -18,40 +18,6 @@
             </template>
           </modal-dialog>
         </template> -->
-        <div class="flex justify-end p-6">
-          <dropdown-menu>
-            <template #trigger>
-              <span class="btn btn-primary">
-                <span>More</span>
-                <msr-icon>more_vert</msr-icon>
-              </span>
-            </template>
-            <template #default="defaultProps">
-              <div class="row-item">
-                <router-link to="/todays-arrivals">
-                  <div class="flex items-center justify-between p-6 py-4">
-                    <div class="flex items-center">
-                      <msr-icon>today</msr-icon>
-                      <p class="leading-none ml-2">Today's Arrivals</p>
-                    </div>
-                    <msr-icon>arrow_forward</msr-icon>
-                  </div>
-                </router-link>
-              </div>
-              <div class="row-item">
-                <router-link to="/cancelled-bookings">
-                  <div class="flex items-center justify-between p-6 py-4">
-                    <div class="flex items-center">
-                      <msr-icon>event_busy</msr-icon>
-                      <p class="leading-none ml-2">Cancelled Bookings</p>
-                    </div>
-                    <msr-icon>arrow_forward</msr-icon>
-                  </div>
-                </router-link>
-              </div>
-            </template>
-          </dropdown-menu>
-        </div>
         <div v-if="bookings && bookings.length" :req="getBookingsReq">
           <div v-for="(booking, index) in bookings" :key="index" class="row-item">
 
@@ -168,7 +134,7 @@ function getBookings() {
   getBookingsReq.send('/api/client-app/v1/bookings')
     .then (res => {
       if (res) {
-        bookings.value = res.bookings;
+        bookings.value = res.cancelled_bookings;
       }
     });
 }

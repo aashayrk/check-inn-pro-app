@@ -6,6 +6,8 @@ import ListOldBills from '@/components/checkins/ListOldBills.vue';
 import ShowCheckIn from '@/components/checkins/ShowCheckIn.vue';
 import ShowBilling from '@/components/checkins/ShowBilling.vue';
 import ListBookings from '@/components/bookings/ListBookings.vue';
+import ListTodaysArrivals from '@/components/bookings/ListTodaysArrivals.vue';
+import ListCancelledBookings from '@/components/bookings/ListCancelledBookings.vue';
 import ShowBooking from '@/components/bookings/ShowBooking.vue';
 import ListReports from '@/components/reports/ListReports.vue';
 import ShowRoomStatus from '@/components/room-status/ShowRoomStatus.vue';
@@ -19,6 +21,9 @@ const routes = [
   { path: '/check-ins/:id/billing', component: ShowBilling },
   { path: '/old-bills', component: ListOldBills },
   { path: '/bookings', component: ListBookings },
+  { path: '/todays-arrivals', component: ListTodaysArrivals },
+  { path: '/cancelled-bookings', component: ListCancelledBookings },
+  { path: '/bookings/:id', component: ShowBooking },
   { path: '/bookings/:id', component: ShowBooking },
   { path: '/reports', component: ListReports },
   { path: '/room-status', component: ShowRoomStatus },
