@@ -13,7 +13,7 @@
 }
 @media screen and (min-width: 360px) and (-webkit-min-device-pixel-ratio: 1.4) {
   html {
-    font-size: 1rem;
+    font-size: 0.9rem;
   }
 }
 @media screen and (min-width: 360px) and (-webkit-min-device-pixel-ratio: 3.5) {

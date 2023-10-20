@@ -1,9 +1,9 @@
 <template>
   <transition appear>
-    <div class="min-h-screen overscroll-y-contain w-full">
+    <div class="h-screen overflow-y-hidden">
       
       <!-- content -->
-      <div class="relative" :class="{'pb-[80px]': props.tabBar}">
+      <div class="h-screen overflow-y-scroll overscroll-y-auto relative" :class="{'pb-[80px]': props.tabBar}">
   
         <!-- dummy for page scroll detection -->
         <div class="absolute top-0 left-0 w-full h-96 dummy-0 -z-50"></div>
