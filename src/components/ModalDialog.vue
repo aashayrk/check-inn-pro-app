@@ -14,14 +14,7 @@
     
     <!-- panel -->
     <transition name="bottom-up">
-      <div class="fixed bottom-0 right-0 w-full max-h-[90%] overflow-y-auto z-20 bg-white" 
-      :class="{
-        'max-w-sm': props.size === 'xsm',
-        'max-w-screen-sm': ! props.size || props.size === 'sm',
-        'max-w-screen-md': props.size === 'md',
-        'max-w-screen-lg': props.size === 'lg',
-        'max-w-screen-xl': props.size === 'xl',
-      }" 
+      <div class="fixed bottom-0 right-0 w-full max-h-[90%] overflow-y-auto z-20 bg-white max-w-md" 
       v-if="isOpen" ref="panel">
         <div class="flex items-center justify-between sticky top-0 bg-white z-10">
           <div class="h-10 flex items-center">

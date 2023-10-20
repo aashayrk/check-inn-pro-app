@@ -8,22 +8,17 @@
 
 @media screen and (min-width: 360px) and (-webkit-min-device-pixel-ratio: 1) {
   html {
-    font-size: 0.8rem;
+    font-size: 0.825rem;
   }
 }
 @media screen and (min-width: 360px) and (-webkit-min-device-pixel-ratio: 1.4) {
   html {
-    font-size: 0.9rem;
-  }
-}
-@media screen and (min-width: 360px) and (-webkit-min-device-pixel-ratio: 3.5) {
-  html {
-    font-size: 1rem;
+    font-size: 0.925rem;
   }
 }
 @media screen and (min-width: 768px) {
   html {
-    font-size: 1.15rem;
+    font-size: 1rem;
   }
 }
 
