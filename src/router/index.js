@@ -11,6 +11,7 @@ import ListCancelledBookings from '@/components/bookings/ListCancelledBookings.v
 import ShowBooking from '@/components/bookings/ShowBooking.vue';
 import ListReports from '@/components/reports/ListReports.vue';
 import ShowRoomStatus from '@/components/room-status/ShowRoomStatus.vue';
+import ShowProfile from '@/components/user/ShowProfile.vue';
 import { useStorage } from '@/services/storage.js';
 
 const routes = [
@@ -27,6 +28,7 @@ const routes = [
   { path: '/bookings/:id', component: ShowBooking },
   { path: '/reports', component: ListReports },
   { path: '/room-status', component: ShowRoomStatus },
+  { path: '/user-profile', component: ShowProfile },
 ]
 
 export const router = createRouter({

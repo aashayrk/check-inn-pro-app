@@ -15,7 +15,7 @@
 
       <!-- user profile -->
       <div class="row-item">
-        <!-- <router-link to="/my-profile"> -->
+        <router-link to="/user-profile">
           <div class="flex justify-between items-center p-6 py-4">
             <div class="flex items-center">
               <msr-icon>person</msr-icon>
@@ -23,18 +23,34 @@
             </div>
             <msr-icon>arrow_forward</msr-icon>
           </div>
-        <!-- </router-link> -->
+        </router-link>
       </div>
 
       <!-- logout -->
       <div class="row-item">
-        <div class="flex justify-between items-center p-6 py-4" @click="logout()">
-          <div class="flex items-center">
-            <msr-icon>logout</msr-icon>
-            <p class="leading-none ml-2">Logout</p>
-          </div>
-          <msr-icon>arrow_forward</msr-icon>
-        </div>
+        <modal-dialog dialog-title="Confirm Logout">
+          <template #trigger>
+            <div class="flex justify-between items-center p-6 py-4">
+              <div class="flex items-center">
+                <msr-icon>logout</msr-icon>
+                <p class="leading-none ml-2">Logout</p>
+              </div>
+              <msr-icon>arrow_forward</msr-icon>
+            </div>
+          </template>
+          <template #default="defaultProps">
+            <div class="p-6">
+              <p class="leading-tight">Are you sure you want to Logout!</p>
+              <div class="flex justify-end mt-6">
+                <button class="btn" @click="defaultProps.close()">Cancel</button>
+                <button class="btn ml-1" @click="logout(defaultProps)">
+                  <span>Yes, Log me out</span>
+                  <msr-icon>arrow_forward</msr-icon>
+                </button>
+              </div>
+            </div>
+          </template>
+        </modal-dialog>
       </div>
     </div>
   </dropdown-menu>
@@ -47,8 +63,9 @@ import { App } from '@capacitor/app';
 
 let authUser = reactive(useUser());
 
-async function logout() {
+async function logout(dialog) {
   Preferences.clear();
+  dialog.close();
   App.exitApp();
 }
 
