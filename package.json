@@ -14,6 +14,7 @@
     "@capacitor-community/file-opener": "^1.0.5",
     "@capacitor/android": "^5.4.1",
     "@capacitor/app": "^5.0.6",
+    "@capacitor/assets": "^3.0.1",
     "@capacitor/browser": "^5.1.0",
     "@capacitor/filesystem": "^5.1.4",
     "@capacitor/preferences": "^5.0.6",
