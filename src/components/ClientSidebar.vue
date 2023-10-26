@@ -84,16 +84,16 @@
               </button>
   
               <!-- Today's Arrivals -->
-              <button @click="navigate('/bookings?todays-arrivals')" class="flex w-full">
-                <div class="p-6 py-2 flex items-center" :class="isCurrent('/bookings?todays-arrivals') ? 'text-yellow-500' : 'text-primary-300'">
+              <button @click="navigate('/todays-arrivals')" class="flex w-full">
+                <div class="p-6 py-2 flex items-center" :class="isCurrent('/todays-arrivals') ? 'text-yellow-500' : 'text-primary-300'">
                   <msr-icon>today</msr-icon>
                   <p class="leading-none ml-2">Today's Arrivals</p>
                 </div>
               </button>
   
               <!-- Cancelled Bookings -->
-              <button @click="navigate('/bookings?status=cancelled')" class="flex w-full">
-                <div class="p-6 py-2 flex items-center" :class="isCurrent('/bookings?status=cancelled') ? 'text-yellow-500' : 'text-primary-300'">
+              <button @click="navigate('/cancelled-bookings')" class="flex w-full">
+                <div class="p-6 py-2 flex items-center" :class="isCurrent('/cancelled-bookings') ? 'text-yellow-500' : 'text-primary-300'">
                   <msr-icon>event_busy</msr-icon>
                   <p class="leading-none ml-2">Cancelled Bookings</p>
                 </div>

@@ -58,6 +58,7 @@ import { ref, reactive, onMounted } from 'vue';
 import { useApi } from '@/services/api.js';
 import { useReports } from '@/services/reports.js';
 import { Toast } from '@capacitor/toast';
+import { FileOpener } from '@capacitor-community/file-opener';
 import moment from 'moment';
 
 let props = defineProps([
@@ -104,6 +105,10 @@ function download() {
           Toast.show({
             text: `Report downloaded as ${result.uri}.`,
             duration: 'long'
+          })
+
+          FileOpener.open({
+            filePath: result.uri
           })
         }
         else {

@@ -98,6 +98,7 @@ import { useStorage } from '@/services/storage.js';
 import { Toast } from '@capacitor/toast';
 import { Share } from '@capacitor/share';
 import { Filesystem, Directory } from '@capacitor/filesystem';
+import { FileOpener } from '@capacitor-community/file-opener';
 import axios from 'axios';
 
 let props = defineProps([
@@ -185,14 +186,18 @@ async function download(previewUrl, name) {
       let filename = `${props.checkIn.folio_number}-${name}`;
 
       Filesystem.writeFile({
-        directory: Directory.Documents,
-        path: `checkinn-pro/bills/${filename}.pdf`,
+        directory: Directory.Cache,
+        path: `${filename}.pdf`,
         recursive: true,
         data: reader.result,
       })
       .then (result => {
         Toast.show({
           text: 'PDF downloaded to ' + result.uri
+        })
+
+        FileOpener.open({
+          filePath: result.uri
         })
       })
     }
@@ -224,8 +229,8 @@ async function share(previewUrl, name) {
       let filename = `${props.checkIn.folio_number}-${name}`;
 
       Filesystem.writeFile({
-        directory: Directory.Documents,
-        path: `checkinn-pro/bills/${filename}.pdf`,
+        directory: Directory.Cache,
+        path: `${filename}.pdf`,
         recursive: true,
         data: reader.result,
       })

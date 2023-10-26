@@ -15,7 +15,7 @@
 
       <!-- user profile -->
       <div class="row-item">
-        <router-link to="/my-profile">
+        <!-- <router-link to="/my-profile"> -->
           <div class="flex justify-between items-center p-6 py-4">
             <div class="flex items-center">
               <msr-icon>person</msr-icon>
@@ -23,20 +23,18 @@
             </div>
             <msr-icon>arrow_forward</msr-icon>
           </div>
-        </router-link>
+        <!-- </router-link> -->
       </div>
 
       <!-- logout -->
       <div class="row-item">
-        <router-link to="/my-profile" class="row-item">
-          <div class="flex justify-between items-center p-6 py-4">
-            <div class="flex items-center">
-              <msr-icon>logout</msr-icon>
-              <p class="leading-none ml-2">Logout</p>
-            </div>
-            <msr-icon>arrow_forward</msr-icon>
+        <div class="flex justify-between items-center p-6 py-4" @click="logout()">
+          <div class="flex items-center">
+            <msr-icon>logout</msr-icon>
+            <p class="leading-none ml-2">Logout</p>
           </div>
-        </router-link>
+          <msr-icon>arrow_forward</msr-icon>
+        </div>
       </div>
     </div>
   </dropdown-menu>
@@ -44,11 +42,15 @@
 <script setup>
 import { reactive, computed } from 'vue';
 import { useUser } from '@/services/user.js';
+import { Preferences } from '@capacitor/preferences';
+import { App } from '@capacitor/app';
 
 let authUser = reactive(useUser());
-let csrfToken = computed(() => {
-  return document.querySelector('meta[name=csrf-token]').getAttribute('content');
-});
+
+async function logout() {
+  Preferences.clear();
+  App.exitApp();
+}
 
 function truncate(string, length = 16) {
   if (string.length > length) {

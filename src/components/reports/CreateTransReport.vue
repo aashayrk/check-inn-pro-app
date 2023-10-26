@@ -80,9 +80,10 @@
 <script setup>
 import { ref, reactive } from 'vue';
 import { useApi } from '@/services/api.js';
-import moment from 'moment';
 import { useReports } from '@/services/reports.js';
 import { Toast } from '@capacitor/toast';
+import { FileOpener } from '@capacitor-community/file-opener';
+import moment from 'moment';
 
 let props = defineProps([
   'report'
@@ -137,7 +138,8 @@ function createReport(callback) {
       from: filters.from,
       to: filters.to,
       transTypes: filters.transTypes.join(','),
-      user: filters.allUsers ? null : user.value.id
+      user: filters.allUsers ? null : user.value.id,
+      appView: true,
     }
   )
   .then (res => {
@@ -158,6 +160,10 @@ function download() {
           Toast.show({
             text: `Report downloaded as ${result.uri}.`,
             duration: 'long'
+          })
+
+          FileOpener.open({
+            filePath: result.uri
           })
         }
         else {

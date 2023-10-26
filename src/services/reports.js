@@ -1,11 +1,11 @@
-import { reactive, ref } from 'vue';
+import { ref } from 'vue';
 import { useStorage } from '@/services/storage.js';
 import { Toast } from '@capacitor/toast';
 import { Share } from '@capacitor/share';
 import { Filesystem, Directory } from '@capacitor/filesystem';
+import { Browser } from '@capacitor/browser';
 import axios from 'axios';
 import moment from 'moment';
-import { Browser } from '@capacitor/browser';
 
 export function useReports(title) {
   let storage = useStorage();
@@ -31,12 +31,12 @@ export function useReports(title) {
       let reader = new FileReader();
       reader.readAsDataURL(res.data);
 
-      reader.onloadend = function () {
+      reader.onloadend = async function () {
         let filename = `${title}-${moment().format('DD-MM-YYYY HH:mm')}`;
 
         Filesystem.writeFile({
-          directory: Directory.Documents,
-          path: `checkinn-pro/reports/${filename}.pdf`,
+          directory: Directory.Cache,
+          path: `${filename}.pdf`,
           recursive: true,
           data: reader.result,
         })
@@ -48,6 +48,35 @@ export function useReports(title) {
             callback(false);
           }
         })
+      }
+    })
+    .finally(() => {
+      progress.value = false;
+    })
+  }
+
+  let getDataUrl = async (previewUrl, callback) => {
+    progress.value = true;
+
+    axios({
+      url: `${host.value}/api/client-app/v1/reports/download`,
+      method: 'POST',
+      data: {
+        previewUrl,
+        title,
+      },
+      responseType: 'blob',
+      headers: {
+        Authorization: `Bearer ${await storage.get('token')}`
+      },
+    })
+    .then (res => {
+      let reader = new FileReader();
+      reader.readAsDataURL(res.data);
+
+      reader.onloadend = async function () {
+        let filename = `${title}-${moment().format('DD-MM-YYYY HH:mm')}`;
+        callback(result.data, filename);
       }
     })
     .finally(() => {
@@ -86,7 +115,7 @@ export function useReports(title) {
     })
   }
 
-  async function share(previewUrl) {
+  let share = async (previewUrl) => {
     download(previewUrl, result => {
       if (result) {
         Share.share({
@@ -101,7 +130,7 @@ export function useReports(title) {
     })
   }
 
-  async function view(previewUrl) {
+  let view = async (previewUrl) => {
     Browser.open({
       url: previewUrl
     })
@@ -109,6 +138,7 @@ export function useReports(title) {
 
   return {
     download,
+    getDataUrl,
     mail,
     share,
     view,
