@@ -27,13 +27,13 @@
     </div>
 
     <!-- client info -->
-    <div>
+    <div v-if="props.menu">
       <user-widget></user-widget>
     </div>
   </div>
 </template>
 <script setup>
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 import UserWidget from '@/components/UserWidget.vue';
 import ClientSidebar from '@/components/ClientSidebar.vue';
 
@@ -43,6 +43,7 @@ let props = defineProps([
 ])
 
 let router = useRouter();
+let route = useRoute();
 
 function goBack() {
   router.go(-1);

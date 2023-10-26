@@ -142,11 +142,11 @@
 
   /* inputs */
   .input, .select {
-    @apply h-12 px-4 rounded-2xl flex items-center w-full box-border bg-stone-100 text-sm border border-stone-100 hover:border-stone-200 focus:border-primary-700 focus:ring-4 focus:ring-primary-100 outline-none;
+    @apply h-12 flex items-center w-full box-border text-sm border-b-2 border-stone-100 hover:border-stone-200 focus:border-primary-700 outline-none;
   }
 
   textarea {
-    @apply p-4 rounded-2xl flex items-center w-full box-border bg-stone-100 text-sm border border-stone-100 hover:border-stone-200 focus:border-primary-700 focus:ring-4 focus:ring-primary-100 outline-none;
+    @apply py-4 flex items-center w-full box-border text-sm border-b-2 border-stone-100 hover:border-stone-200 focus:border-primary-700 outline-none;
   }
 
   /* switch / checkbox */
