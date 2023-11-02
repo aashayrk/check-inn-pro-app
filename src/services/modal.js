@@ -1,17 +1,20 @@
 export function useModal() {
   let stack = [];
   
-  let register = (isOpen) => {
-    stack.push(isOpen);
+  let register = (modal) => {
+    stack.push(modal);
     return true;
   }
 
   let close = () => {
-    let isOpen = stack.pop();
+    let modal = stack.pop();
 
-    if (isOpen) {
-      isOpen.value = false;
+    if (modal) {
+      modal.isOpen.value = false;
       return true;
+    }
+    else {
+      return false;
     }
   }
 

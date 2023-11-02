@@ -12,15 +12,44 @@ import { App } from '@capacitor/app';
 import { StatusBar, Style } from '@capacitor/status-bar';
 import { useModal } from './services/modal.js';
 import { onMounted, provide } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 
 let router = useRouter();
+let route = useRoute();
+let tabs = [
+  '/',
+  '/check-ins',
+  '/room-status',
+  '/bookings',
+  '/reports',
+]
+
 let modal = useModal();
 provide('modal', modal);
 
 App.addListener('backButton', e => {
+
+  // close any closables / modals first
   if (! modal.close()) {
-    router.go(-1);
+    
+    // if its a tab (main routes)
+    if (tabs.some(path => (path === route.fullPath))) {
+
+      // if its the default tab (dashboard)
+      if (route.fullPath === '/') {
+        App.exitApp();
+      }
+
+      // else go to default path (dashboard)
+      else {
+        router.push('/');
+      }
+    }
+
+    // else go back in history
+    else {
+      router.go(-1);
+    }
   }
 })
 
