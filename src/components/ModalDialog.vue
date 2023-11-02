@@ -54,7 +54,9 @@ function open () {
   if (! props.disabled) {
     isOpen.value = true;
 
-    if (modal.register(isOpen)) {
+    if (modal.register({
+      isOpen: isOpen,
+    })) {
       emits('open');
     };
   }

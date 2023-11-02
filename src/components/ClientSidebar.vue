@@ -122,7 +122,7 @@
   </transition>
 </template>
 <script setup>
-import { reactive, ref, onMounted } from 'vue';
+import { reactive, ref, onMounted, inject } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useApi } from '@/services/api.js';
 import { useUserAbilities } from '@/services/userAbilities.js';
@@ -144,9 +144,21 @@ let toggleStatus = reactive({
   'templates': false,
   'reports': false
 });
+let emits = defineEmits([
+  'open',
+  'close'
+])
+
+let modal = inject('modal');
 
 function open() {
   isOpen.value = true;
+
+  if (modal.register({
+    isOpen: isOpen,
+  })) {
+    emits('open');
+  };
 }
 
 function close() {

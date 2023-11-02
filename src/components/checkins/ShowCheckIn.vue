@@ -326,7 +326,7 @@
                     <p class="leading-none">{{ record.old_room.number }} to {{ record.room.number }}</p>
                     <p class="leading-none text-xs mt-1">{{ record.created_at }}, by {{ record.user.username }}</p> 
                   </div>
-                  <div class="col-tags">
+                  <div class="col-tags justify-end">
                     <span class="tag" v-if="record.reason">{{ record.reason }}</span> 
                     <!-- <span class="tag">to {{ record.upto }}</span> -->
                   </div>

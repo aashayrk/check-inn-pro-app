@@ -2,14 +2,12 @@
   <div>
 
     <!-- img -->
-    <modal-dialog size="xsm" :disabled="! document">
+    <modal-dialog size="xsm" :disabled="! document" dialog-title="Preview">
       <template #trigger>
         <slot name="trigger"></slot>
       </template>
       <template #default="defaultProps">
-        <info-section section-title="Preview">
-          <img :src="document.url" :alt="document.type" class="w-full h-auto rounded-b-xl">
-        </info-section>
+        <img :src="document.url" :alt="document.type" class="w-full h-auto rounded-b-xl">
       </template>
     </modal-dialog>
   </div>

@@ -183,7 +183,7 @@ async function download(previewUrl, name) {
     reader.readAsDataURL(res.data);
 
     reader.onloadend = function () {
-      let filename = `${props.checkIn.folio_number}-${name}`;
+      let filename = `${props.checkIn.bill_number ? props.checkIn.bill_number : props.checkIn.folio_number}-${name}`;
 
       Filesystem.writeFile({
         directory: Directory.Cache,
@@ -226,7 +226,7 @@ async function share(previewUrl, name) {
     reader.readAsDataURL(res.data);
 
     reader.onloadend = function () {
-      let filename = `${props.checkIn.folio_number}-${name}`;
+      let filename = `${props.checkIn.bill_number ? props.checkIn.bill_number : props.checkIn.folio_number}-${name}`;
 
       Filesystem.writeFile({
         directory: Directory.Cache,

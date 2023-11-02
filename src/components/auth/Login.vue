@@ -1,24 +1,24 @@
 <template>
-  <div class="flex flex-col fixed top-0 left-0 w-full h-full bg-primary-100">
-    <div class="flex-grow flex items-center justify-center">
+  <div class="flex items-center fixed top-0 left-0 w-full h-full bg-gradient-to-br from-primary-600 via-primary-700 to-primary-600 overflow-y-auto">
+    <div class="p-8 w-full">
+      <div class="h-10 px-6 flex items-center">
+        <p class="leading-none text-xs uppercase text-primary-300 font-bold text-center">Login to CheckInn-Pro</p>
+      </div>
+      <div class="flex items-center justify-center bg-primary-100 rounded-t-xl">
 
-      <!-- logo -->
-      <div class="p-6 text-center">
-        <img src="/images/check-inn-pro-logo.svg" alt="Check-Inn Pro Logo" class="w-32 md:w-48 h-auto mx-auto">
-        <div class="mt-4">
-          <p class="leading-none font-bold text-3xl md:text-5xl tracking-tighter font-logo">Check-Inn Pro</p>
-          <p class="leading-none tracking-tighter font-logo mt-2">An Ideal Software for Hotel & Resort Management</p>
+        <!-- logo -->
+        <div class="p-8 text-center">
+          <img src="/images/check-inn-pro-logo.svg" alt="Check-Inn Pro Logo" class="w-24 md:w-32 h-auto mx-auto">
+          <div class="mt-4">
+            <p class="leading-none font-bold text-3xl md:text-5xl tracking-tighter font-logo">Check-Inn Pro</p>
+            <p class="leading-none tracking-tighter font-logo mt-2">An Ideal Software for Hotel & Resort Management</p>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="bg-white">
-
-      <!-- form -->
-      <api-request :req="loginReq" @reset="loginReq.reset()" @retry="login()">
+      <div class="bg-white rounded-b-xl shadow-md">
+  
+        <!-- form -->
         <div class="w-full max-w-md mx-auto">
-          <div class="h-10 px-6 flex items-center">
-            <p class="leading-none text-xs uppercase font-bold">Login to CheckInn-Pro</p>
-          </div>
           <div class="p-6">
   
             <!-- Email Address -->
@@ -51,7 +51,10 @@
             </div>
           </div>  
         </div>
-      </api-request>
+      </div>
+      <div class="h-10 px-6 flex items-center">
+        <p class="leading-none text-xs uppercase text-primary-300 font-bold text-center">{{ message }}</p>
+      </div>
     </div>
   </div>
 </template>

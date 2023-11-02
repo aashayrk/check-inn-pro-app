@@ -36,16 +36,14 @@
               <div class="data-actions">
                 
                 <!-- list receipts -->
-                <modal-dialog>
+                <modal-dialog :dialog-title="`Receipts for ${item.mode}`">
                   <template #trigger>
                     <button class="btn btn-small btn-round">
                       <msr-icon>chevron_right</msr-icon>
                     </button>
                   </template>
                   <template #default="defaultProps">
-                    <info-section :section-title="`Receipts for ${item.mode}`">
-                      <list-receipts :check-in="checkIn" :group="item" :receipts="item.receipts" :key="checkIn.id"></list-receipts>
-                    </info-section>
+                    <list-receipts :check-in="checkIn" :group="item" :receipts="item.receipts" :key="checkIn.id"></list-receipts>
                   </template>
                 </modal-dialog>
               </div>

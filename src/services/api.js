@@ -1,5 +1,6 @@
 import { ref } from 'vue';
 import { useStorage } from './storage';
+import { Preferences } from '@capacitor/preferences';
 import axios from 'axios';
 
 export function useApi () {
@@ -37,7 +38,7 @@ export function useApi () {
         return true;
       }
     })
-    .catch (err => {
+    .catch (async err => {
       progress.value = false;
       success.value = false;
 
@@ -46,6 +47,11 @@ export function useApi () {
       }
 
       errors.value = err.response.data ? err.response.data.errors : {};
+
+      if (err.response.status === 401) {
+        await Preferences.clear();
+        window.location.href = '/login';
+      }
 
       return false;
     });

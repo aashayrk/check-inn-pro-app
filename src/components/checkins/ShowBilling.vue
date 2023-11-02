@@ -218,16 +218,14 @@
                         </div>
                       </div>
                       <div class="data-actions">
-                        <modal-dialog>
+                        <modal-dialog :dialog-title="`Receipts for Room ${checkIn.room.number} - #${checkIn.folio_number}`">
                           <template #trigger>
                             <button class="btn btn-small btn-round btn-transparent">
                               <msr-icon>chevron_right</msr-icon>
                             </button>
                           </template>
                           <template #default="defaultProps">
-                            <info-section :section-title="`Receipts for Room ${checkIn.room.number} - #${checkIn.folio_number}`">
-                              <list-receipts :check-in="checkIn" :receipts="item.receipts" :mode="item.mode"></list-receipts>
-                            </info-section>
+                            <list-receipts :check-in="checkIn" :receipts="item.receipts" :mode="item.mode"></list-receipts>
                           </template>
                         </modal-dialog>
                       </div>

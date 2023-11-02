@@ -1,8 +1,8 @@
 <template>
-  <page :tab-bar="true" class="pb-20">
+  <page :tab-bar="true">
     <page-topbar :menu="true"></page-topbar>
 
-    <div v-if="infoReq.success">
+    <div v-if="infoReq.success" class="pb-[68px]">
       <info-section section-title="Rooms">
         <div class="bg-white z-10">
           <div class="flex p-6">

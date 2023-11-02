@@ -25,16 +25,14 @@
         <div class="data-actions">
   
           <!-- manage receipt -->
-          <modal-dialog>
+          <modal-dialog dialog-title="Receipt Details">
             <template #trigger>
               <button class="btn btn-round btn-small">
                 <msr-icon>chevron_right</msr-icon>
               </button>
             </template>
             <template #default="defaultProps">
-              <info-section section-title="Receipt Details">
-                <manage-receipt :receipt="item" :check-in="props.checkIn" @receipt-updated="getReceipts()" @receipt-cancelled="onReceiptCancelled(defaultProps)"></manage-receipt>
-              </info-section>
+              <manage-receipt :receipt="item" :check-in="props.checkIn" @receipt-updated="getReceipts()" @receipt-cancelled="onReceiptCancelled(defaultProps)"></manage-receipt>
             </template>
           </modal-dialog>
         </div>

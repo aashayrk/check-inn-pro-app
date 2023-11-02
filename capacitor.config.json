@@ -1,9 +1,16 @@
 {
-  "appId": "com.example.app",
-  "appName": "checkinn-pro-app",
+  "appId": "com.checkinnpro.app",
+  "appName": "CheckInn-Pro",
   "webDir": "dist",
   "server": {
-    "scheme": "http",
-    "hostname": "app.checkinn-pro.com"
+    "scheme": "http"
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 3000,
+      "launchAutoHide": true,
+      "launchFadeOutDuration": 3000,
+      "backgroundColor": "#ffffff"
+    }
   }
 }

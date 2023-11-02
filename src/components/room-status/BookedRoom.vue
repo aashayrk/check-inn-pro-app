@@ -15,7 +15,7 @@
       <div class="flex justify-between">
         <div>
           <p class="leading-none text-2xl">{{ room.number }}</p>
-          <p class="leading-none text-xs mt-1 hidden md:block">{{ room.type.name }}, {{ room.group.name }}</p>
+          <p class="leading-none text-xs mt-1">{{ room.type.name }}, {{ room.group.name }}</p>
         </div>
 
         <!-- info -->

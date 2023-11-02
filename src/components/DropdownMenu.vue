@@ -20,7 +20,7 @@
   </div>
 </template>
 <script setup>
-import { ref } from 'vue';
+import { inject, ref } from 'vue';
 
 let props = defineProps([
   'size'
@@ -30,10 +30,15 @@ let emits = defineEmits([
   'close',
 ]);
 let isOpen = ref(false);
+let modal = inject('modal');
 
 function open () {
   isOpen.value = true;
-  emits('open');
+  if (modal.register({
+    isOpen: isOpen,
+  })) {
+    emits('open');
+  };
 }
 
 function close () {
