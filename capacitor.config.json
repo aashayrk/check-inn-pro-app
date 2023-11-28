@@ -3,7 +3,8 @@
   "appName": "CheckInn-Pro",
   "webDir": "dist",
   "server": {
-    "scheme": "http"
+    "scheme": "http",
+    "hostname": "app.checkinnpro.com"
   },
   "plugins": {
     "SplashScreen": {
